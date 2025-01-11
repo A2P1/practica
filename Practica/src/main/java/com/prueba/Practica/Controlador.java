@@ -22,4 +22,19 @@ public class Controlador {
         return new ResponseEntity<>(dataRecords, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/agregarDatos", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> agregarDatos(@RequestBody DataRecord newData) {
+        // Leer los datos actuales desde el archivo
+        ArrayList<DataRecord> dataRecords = jsonManager.leerFichero(fichero);
+
+        // Agregar el nuevo dato
+        dataRecords.add(newData);
+
+        // Escribir los datos actualizados al archivo
+        jsonManager.escribirFichero(fichero, dataRecords);
+
+        // Responder con mensaje de éxito
+        return ResponseEntity.ok("Datos agregados correctamente");
+    }
+
 }
